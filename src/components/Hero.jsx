@@ -4,9 +4,13 @@ import { ArrowRight, Download, Github, Linkedin, Mail } from 'lucide-react';
 const Hero = () => {
   return (
     <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 relative overflow-hidden">
+      {/* Background Blob */}
       <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl -z-10"></div>
+      
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8 animate-fade-in-up">
+        
+        {/* Left Content - Animates Up */}
+        <div className="space-y-8" data-aos="fade-up">
           <div className="inline-block bg-blue-100 text-accent px-4 py-2 rounded-full text-sm font-bold tracking-wide uppercase">
             Full Stack Developer
           </div>
@@ -16,6 +20,7 @@ const Hero = () => {
           <p className="text-lg text-gray-600 max-w-lg leading-relaxed">
             I am a developer who focuses on business logic. Currently building <b>AquaMark</b> and upgrading <b>Surat BookCycle</b> to the MERN stack.
           </p>
+          
           <div className="flex flex-wrap gap-4 pt-2">
             <button className="flex items-center gap-2 bg-accent text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:bg-blue-600 transition">
               View Projects <ArrowRight size={20} />
@@ -24,20 +29,36 @@ const Hero = () => {
               Download CV <Download size={20} />
             </button>
           </div>
+
           <div className="flex gap-6 text-gray-400 pt-4">
-            <Github className="hover:text-primary cursor-pointer transition" size={24} />
-            <Linkedin className="hover:text-primary cursor-pointer transition" size={24} />
-            <Mail className="hover:text-primary cursor-pointer transition" size={24} />
+             {/* Remember to update these links with your real URLs */}
+             <a href="https://github.com/manthanvaghasiya" target="_blank" rel="noopener noreferrer">
+               <Github className="hover:text-primary cursor-pointer transition" size={24} />
+             </a>
+             <a href="https://linkedin.com/in/manthanvaghasiya" target="_blank" rel="noopener noreferrer">
+               <Linkedin className="hover:text-primary cursor-pointer transition" size={24} />
+             </a>
+             <a href="mailto:your@email.com">
+               <Mail className="hover:text-primary cursor-pointer transition" size={24} />
+             </a>
           </div>
         </div>
-        <div className="relative group">
+
+        {/* Right Image - Animates from Left */}
+        <div className="relative group" data-aos="fade-left" data-aos-delay="200">
           <div className="absolute -inset-1 bg-gradient-to-r from-accent to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
           <div className="relative bg-white border border-gray-100 p-3 rounded-2xl shadow-2xl rotate-2 group-hover:rotate-0 transition duration-500">
-            <div className="h-[450px] w-full bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center text-gray-400 relative">
-              <img src="https://images.unsplash.com/photo-1507238691140-d48db90ae317?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Profile" className="object-cover w-full h-full opacity-80 hover:scale-105 transition duration-700"/>
-            </div>
+             {/* Use "/profile.jpg" here if you added your photo to the public folder */}
+             <div className="h-[450px] w-full bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center text-gray-400 relative">
+               <img 
+                 src="src/assets/profile.jpg.jpg" 
+                 alt="Profile" 
+                 className="object-cover w-full h-full opacity-80 hover:scale-105 transition duration-700"
+               />
+             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

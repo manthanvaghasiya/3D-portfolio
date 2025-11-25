@@ -14,8 +14,8 @@ const Contact = () => {
         <div className="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-2xl font-bold tracking-tighter">Dev<span className="text-accent">Portfolio</span>.</div>
           <div className="flex gap-8 text-gray-400">
-            <a href="#" className="hover:text-white transition">GitHub</a>
-            <a href="#" className="hover:text-white transition">LinkedIn</a>
+            <a href="https://github.com/manthanvaghasiya" className="hover:text-white transition">GitHub</a>
+            <a href="www.linkedin.com/in/manthan-vaghasiya-b213a8267" className="hover:text-white transition">LinkedIn</a>
             <a href="#" className="hover:text-white transition">Instagram</a>
           </div>
           <p className="text-gray-500 text-sm">© 2025 Crafted with React & Tailwind.</p>

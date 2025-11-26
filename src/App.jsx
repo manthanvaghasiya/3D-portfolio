@@ -13,8 +13,9 @@ import Contact from './components/Contact';
 function App() {
   useEffect(() => {
     AOS.init({
-      duration: 1000,
-      once: true,
+      duration: 1000, // Animation speed
+      once: false,     // <--- CHANGE THIS to false (So it repeats every time)
+      mirror: true,    // <--- ADD THIS (Animates when scrolling back up too)
       easing: 'ease-out',
     });
   }, []);

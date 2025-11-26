@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         
         {/* Left Content - Animates Up */}
-        <div className="space-y-8" data-aos="fade-up">
+        <div className="space-y-8" data-aos="fade-right">
           <div className="inline-block bg-blue-100 text-accent px-4 py-2 rounded-full text-sm font-bold tracking-wide uppercase">
             Full Stack Developer
           </div>
@@ -59,7 +59,7 @@ const Hero = () => {
         </div>
 
         {/* Right Image - Animates from Left */}
-        <div className="relative group" data-aos="fade-left" data-aos-delay="200">
+        <div className="relative group" data-aos="fade-left">
           <div className="absolute -inset-1 bg-gradient-to-r from-accent to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
           <div className="relative bg-white border border-gray-100 p-3 rounded-2xl shadow-2xl rotate-2 group-hover:rotate-0 transition duration-500">
              {/* Make sure you have profile.jpg (or .png) in your public folder */}

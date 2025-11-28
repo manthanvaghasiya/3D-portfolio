@@ -9,12 +9,9 @@ const Projects = () => {
     {
       title: "Surat BookCycle",
       category: "Old Book Exchange - E-commerce Platform",
-      shortDescription: "A community-driven book exchange platform for Surat.",
+      shortDescription: "A hyper-local P2P marketplace engineered to connect students for buying, selling, and exchanging used textbooks, promoting a zero-waste circular economy.",
       
-      // 1. UPDATED: Realistic MERN Description
-      fullDescription: "Surat BookCycle is a centralized marketplace engineered to solve the problem of textbook waste. The platform allows students to easily list their used books and find buyers. \n\n• Designed a robust REST API using Node.js and Express to handle book data.\n• Implemented Secure User Authentication using JWT (JSON Web Tokens) to protect user accounts.\n• Built a dynamic frontend with React.js that allows users to search, filter, and view book details instantly.\n• created a responsive dashboard for users to manage their listings (Add, Edit, Delete books).",
-      
-      // 2. UPDATED: Realistic Features
+      fullDescription: "Surat BookCycle is a centralized marketplace engineered to solve the problem of textbook waste. The platform allows students to easily list their used books and find buyers. \n\n• Designed a robust REST API using Node.js and Express to handle book data.\n• Implemented Secure User Authentication using JWT (JSON Web Tokens) to protect user accounts.\n• Built a dynamic frontend with React.js that allows users to search, filter, and view book details instantly.\n• Created a responsive dashboard for users to manage their listings (Add, Edit, Delete books).",
       features: [
         "Secure Login/Signup (JWT)",
         "Search & Category Filtering",
@@ -22,7 +19,6 @@ const Projects = () => {
         "Responsive Mobile/Desktop UI"
       ],
       tech: ["MongoDB", "Express", "React", "Node.js"],
-      
       image: "/bookcycle.png", 
       modalImage: "/bookcycle-full.png",
       githubLink: "https://github.com/manthanvaghasiya/surat-bookcycle",
@@ -31,11 +27,9 @@ const Projects = () => {
     {
       title: "DairyFlow",
       category: "Dairy Management System",
-      shortDescription: "A complete business management system for dairy shops.",
+      shortDescription: "A comprehensive SaaS ERP solution for dairy businesses featuring a specialized POS, automated debt (Udhaar) tracking, and real-time inventory analytics.",
       
-      // DairyFlow Description (Kept technical as per your previous diagram)
       fullDescription: "DairyFlow is a specialized SaaS solution tailored for the Indian dairy industry. It digitizes the traditional 'red book' record-keeping system. \n\n• Developed a custom Point of Sale (POS) interface optimized for rapid morning/evening transaction shifts.\n• Solved the complex 'Customer Debt' (Udhaar) tracking problem with automated ledger updates.\n• Implemented real-time inventory tracking for perishable goods to reduce wastage.\n• Designed interactive dashboards for daily revenue and sales analytics.",
-      
       features: [
         "Point of Sale (POS) Interface",
         "Customer Debt (Udhaar) Management",
@@ -47,6 +41,24 @@ const Projects = () => {
       modalImage: "/dairyflow-full.png",
       githubLink: "https://github.com/manthanvaghasiya/dairyflow-dairy-management-system",
       liveLink: "#",
+    },
+    {
+      title: "LifeOS",
+      category: "Personal Operating System (Finance & Habits)",
+      shortDescription: "An all-in-one productivity ecosystem combining financial health tracking, habit formation logic, and goal setting into a single, data-driven dashboard.",
+      
+      fullDescription: "LifeOS unifies Financial Health and Daily Discipline into one MERN-stack application, solving the problem of context-switching between productivity apps. \n\n• Engineered a Financial Dashboard using Recharts to visualize income vs. expense trends (Spline Area Charts).\n• Built a GitHub-style Habit Tracker with 'Optimistic UI' updates, making the interface feel instant.\n• Implemented complex aggregation logic in MongoDB to calculate 'Avg. Daily Consistency' and financial audits.\n• Secured user data with JWT Authentication, ensuring complete privacy between users.",
+      features: [
+        "Financial Analytics (Area & Donut Charts)",
+        "Habit Tracker with Consistency Logic",
+        "Goal Setting (Long/Short Term)",
+        "Personal Notes (Masonry Grid)"
+      ],
+      tech: ["MERN Stack", "Recharts", "Tailwind CSS", "Render"],
+      image: "/lifeos.png", 
+      modalImage: "/lifeos-full.png",
+      githubLink: "https://github.com/manthanvaghasiya/lifeos",
+      liveLink: "https://lifeos-demo.vercel.app",
     },
   ];
 
@@ -64,42 +76,48 @@ const Projects = () => {
         </div>
 
         {/* --- PROJECTS LIST --- */}
-        <div className="space-y-12">
+        <div className="space-y-24">
           {projects.map((project, index) => (
             <div 
               key={index} 
-              className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-center`}
+              className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-center bg-white p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition duration-500`}
               data-aos="fade-up"
             >
-              {/* Project Image (Clickable) */}
+              {/* Project Image (Clickable & Tilted) */}
               <div 
-                className="w-full md:w-1/2 relative group cursor-pointer"
+                className="w-full md:w-1/2 group cursor-pointer perspective-1000"
                 onClick={() => setSelectedProject(project)}
               >
-                <div className="absolute inset-0 bg-accent rounded-xl rotate-2 group-hover:rotate-0 transition duration-500 opacity-20"></div>
-                <div className="relative rounded-xl overflow-hidden shadow-2xl border border-gray-100">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-[350px] object-cover hover:scale-105 transition duration-700"
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                    <p className="text-white font-bold text-lg flex items-center gap-2">
-                      <ExternalLink size={20} /> View Details
-                    </p>
-                  </div>
+                {/* 1. ROTATION LOGIC:
+                       - Default: rotate-2 (Tilted)
+                       - Hover: rotate-0 (Straight)
+                       - index % 2 logic alternates the tilt direction for a natural look
+                */}
+                {/* Removed gradient background and browser header divs */}
+                <div className={`relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 transform transition-transform duration-500 ${index % 2 === 0 ? 'rotate-2' : '-rotate-2'} group-hover:rotate-0 group-hover:scale-[1.02]`}>
+                    
+                    {/* 4. Image */}
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-[350px] object-cover hover:scale-105 transition duration-700"
+                    />
+
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                      <p className="text-white font-bold text-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                        <ExternalLink size={20} /> View Details
+                      </p>
+                    </div>
                 </div>
               </div>
 
               {/* Project Summary */}
               <div className="w-full md:w-1/2 space-y-6">
-                
-                {/* Title First */}
                 <h3 className="text-3xl font-bold text-primary">
                   {project.title}
                 </h3>
 
-                {/* Category Second */}
                 <div className="text-accent font-bold tracking-widest uppercase text-sm">
                   {project.category}
                 </div>
@@ -110,7 +128,7 @@ const Projects = () => {
                 
                 <div className="flex flex-wrap gap-3">
                   {project.tech.map((t, i) => (
-                    <span key={i} className="px-4 py-1 bg-blue-50 text-accent text-sm font-semibold rounded-full border border-blue-100">
+                    <span key={i} className="px-4 py-1 bg-slate-100 text-primary text-sm font-semibold rounded-lg border border-slate-200">
                       {t}
                     </span>
                   ))}
@@ -142,6 +160,7 @@ const Projects = () => {
           {/* Modal Content */}
           <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 animate-fade-in-up shadow-2xl">
             
+            {/* Close Button */}
             <button 
               onClick={() => setSelectedProject(null)}
               className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition z-20"
@@ -171,7 +190,6 @@ const Projects = () => {
               
               <div className="md:col-span-2 space-y-6">
                 <h3 className="text-xl font-bold text-primary">About this project</h3>
-                {/* whitespace-pre-line ensures the bullets are on new lines */}
                 <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
                   {selectedProject.fullDescription}
                 </p>

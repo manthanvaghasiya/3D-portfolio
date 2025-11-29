@@ -21,7 +21,7 @@ const Projects = () => {
       tech: ["MongoDB", "Express", "React", "Node.js"],
       image: "/bookcycle.png", 
       modalImage: "/bookcycle-full.png",
-      githubLink: "https://github.com/manthanvaghasiya/surat-bookcycle",
+      githubLink: https://github.com/manthanvaghasiya/surat-bookcycle-mern.git",
       liveLink: "#",
     },
     {

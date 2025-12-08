@@ -158,7 +158,7 @@ const Hero = () => {
             data-aos="fade-up"
             data-aos-delay="160"
           >
-            <span className="block text-xl md:text-2xl font-bold text-slate-500 mb-2">
+            <span className="block text-xl md:text-2xl font-bold text-slate-700 mb-2">
                 Hi, I&apos;m Manthan Vaghasiya
               </span>
 

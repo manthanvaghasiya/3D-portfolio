@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
-// 1. The Brain (State Management)
 import { ThemeProvider } from './context/ThemeContext';
-
-// 2. The Skeleton (UI Structure)
 import Layout from './components/Layout';
 
-// 3. The Magic (3D Background)
-import HologramCanvas from './components/HologramCanvas';
+// Only this one background component is needed now
+import HologramCanvas from './components/HologramCanvas'; 
 
-// 4. The Content (Your Sections)
 import Hero from './components/Hero';
 import Experience from './components/Experience';
 import Stats from './components/Stats'; 
 import Projects from './components/Projects';
 import Skills from './components/Skills';
-import Contact from './components/Contact';
 import About from "./components/About";
+import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Preloader from './components/Preloader';
+import Navbar from './components/Navbar';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,18 +33,16 @@ function App() {
   }, [isLoading]);
 
   return (
-    // WRAPPER: Provides "Dark/Light" state to the whole app
     <ThemeProvider>
-      
       {isLoading && <Preloader onFinish={() => setIsLoading(false)} />}
 
       {!isLoading && (
         <>
-          {/* LAYER 0: The 3D World (Fixed Background) */}
-          {/* It listens to the ThemeProvider internally to change lighting */}
+          {/* The Single Source of Truth for Background */}
           <HologramCanvas />
 
-          {/* LAYER 1: The UI Interface (Scrollable) */}
+          <Navbar />
+          
           <Layout>
             <Hero />
             <Skills />
@@ -62,7 +56,6 @@ function App() {
           <ScrollToTop />
         </>
       )}
-      
     </ThemeProvider>
   );
 }

@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Components
-import Navbar from './components/Navbar';
+// 1. The Brain (State Management)
+import { ThemeProvider } from './context/ThemeContext';
+
+// 2. The Skeleton (UI Structure)
+import Layout from './components/Layout';
+
+// 3. The Magic (3D Background)
+import HologramCanvas from './components/HologramCanvas';
+
+// 4. The Content (Your Sections)
 import Hero from './components/Hero';
 import Experience from './components/Experience';
 import Stats from './components/Stats'; 
@@ -29,26 +37,33 @@ function App() {
   }, [isLoading]);
 
   return (
-    <>
+    // WRAPPER: Provides "Dark/Light" state to the whole app
+    <ThemeProvider>
+      
       {isLoading && <Preloader onFinish={() => setIsLoading(false)} />}
 
       {!isLoading && (
-        <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
-          <Navbar />
-          <main>
+        <>
+          {/* LAYER 0: The 3D World (Fixed Background) */}
+          {/* It listens to the ThemeProvider internally to change lighting */}
+          <HologramCanvas />
+
+          {/* LAYER 1: The UI Interface (Scrollable) */}
+          <Layout>
             <Hero />
             <Skills />
             <Experience />
             <Stats />
-            <About />
             <Projects />
-            
+            <About />
             <Contact />
-          </main>
+          </Layout>
+          
           <ScrollToTop />
-        </div>
+        </>
       )}
-    </>
+      
+    </ThemeProvider>
   );
 }
 

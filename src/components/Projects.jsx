@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ExternalLink, Github, X, ArrowUpRight, Layers, CheckCircle2, ArrowRight, ChevronLeft } from "lucide-react";
+import { ExternalLink, Github, X, ArrowUpRight, Layers, CheckCircle2, ArrowRight, ChevronLeft, FolderGit2 } from "lucide-react";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -10,7 +10,7 @@ const Projects = () => {
     else document.body.style.overflow = "unset";
   }, [selectedProject]);
 
-  // --- PROJECT DATA (Unchanged) ---
+  // --- PROJECT DATA ---
   const projects = [
     {
       title: "Surat BookCycle",
@@ -85,20 +85,19 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-16 md:py-24 px-4 sm:px-6 bg-[#F8FAFC]">
+    <section id="projects" className="py-16 md:py-24 px-4 sm:px-6 relative z-10">
       <div className="max-w-7xl mx-auto">
         
         {/* --- HEADER --- */}
-        {/* FIX 1: Changed items-end to items-start md:items-end to prevent button cut-off on mobile */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-12 gap-6" data-aos="fade-up">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6" data-aos="fade-up">
           <div className="max-w-2xl">
-            <span className="text-indigo-600 font-bold tracking-widest uppercase text-xs border border-indigo-100 px-3 py-1 rounded-full bg-indigo-50">
-              Selected Work
-            </span>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 mt-4 mb-2 leading-tight">
-              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Project</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-card/50 border border-text-muted/20 text-accent text-[11px] font-bold uppercase tracking-widest mb-4 shadow-sm backdrop-blur-sm">
+                <FolderGit2 size={12} /> Selected Work
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-text-main mt-4 mb-2 leading-tight">
+              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-glow">Projects</span>
             </h2>
-            <p className="text-slate-500 text-base md:text-lg mt-3">
+            <p className="text-text-muted text-base md:text-lg mt-3">
               High-performance web applications built for scale and user experience.
             </p>
           </div>
@@ -107,7 +106,7 @@ const Projects = () => {
             href="https://github.com/manthanvaghasiya" 
             target="_blank"
             rel="noreferrer"
-            className="group flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-full font-bold text-slate-700 hover:border-indigo-600 hover:text-indigo-600 transition-all shadow-sm hover:shadow-md active:scale-95"
+            className="group flex items-center gap-3 px-6 py-3 bg-bg-card/50 border border-text-muted/20 rounded-full font-bold text-text-muted hover:border-accent hover:text-accent transition-all shadow-lg hover:shadow-[0_0_20px_var(--accent-glow)] active:scale-95 backdrop-blur-sm"
           >
             <Github size={20} />
             <span>View Github</span>
@@ -115,48 +114,50 @@ const Projects = () => {
           </a>
         </div>
 
-        {/* --- GRID LAYOUT --- */}
-        {/* UX IMPROVEMENT: Adjusted gap for mobile/tablet consistency */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-9">
+        {/* --- PROJECT GRID --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {projects.map((project, index) => (
             <div 
               key={index}
               onClick={() => setSelectedProject(project)}
-              className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 cursor-pointer flex flex-col h-full"
+              className="group bg-bg-card/40 backdrop-blur-md border border-text-muted/10 rounded-2xl overflow-hidden hover:border-accent/50 hover:shadow-[0_0_30px_var(--accent-glow)] transition-all duration-300 cursor-pointer flex flex-col h-full"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
               
               {/* Image Area */}
-              <div  className="relative h-56 md:h-60 overflow-hidden shrink-0">
+              <div className="relative h-56 md:h-60 overflow-hidden shrink-0">
+                {/* Gradient overlay adjusted for both themes (darker at bottom for text readability if needed) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 z-10 transition-opacity group-hover:opacity-40" />
+                
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowUpRight size={16} className="text-slate-900" />
+                <div className="absolute top-3 right-3 z-20 bg-bg-main/80 backdrop-blur-md px-2 py-1 rounded-md border border-text-muted/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight size={16} className="text-accent" />
                 </div>
               </div>
               
               {/* Content Area */}
-              <div className="p-5 flex flex-col flex-grow">
+              <div className="p-5 flex flex-col flex-grow relative z-20">
                 
                 <div className="mb-3">
                    <div className="flex items-center gap-2 mb-2">
-                      <Layers size={14} className="text-indigo-500" />
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                      <Layers size={14} className="text-accent" />
+                      <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
                         {project.category.split("·")[0].trim()}
                       </span>
                    </div>
                    <h3 
-                     className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1"
+                     className="text-xl font-bold text-text-main group-hover:text-accent transition-colors line-clamp-1"
                    >
                      {project.title}
                    </h3>
                 </div>
 
-                <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                <p className="text-text-muted text-sm leading-relaxed mb-4 line-clamp-2">
                   {project.shortDescription}
                 </p>
 
@@ -164,14 +165,14 @@ const Projects = () => {
                 <div className="mt-auto">
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {project.tech.map((t, i) => (
-                      <span key={i} className="px-2 py-1 bg-slate-50 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded border border-slate-100">
+                      <span key={i} className="px-2 py-1 bg-bg-main/50 text-text-muted text-[10px] font-bold uppercase tracking-wider rounded border border-text-muted/10 group-hover:border-accent/30 transition-colors">
                         {t}
                       </span>
                     ))}
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100">
-                    <span className="text-sm font-bold text-indigo-600 flex items-center gap-2 group-hover:gap-3 transition-all">
+                  <div className="pt-4 border-t border-text-muted/10">
+                    <span className="text-sm font-bold text-accent flex items-center gap-2 group-hover:gap-3 transition-all">
                       Read Case Study <ArrowRight size={16} />
                     </span>
                   </div>
@@ -184,70 +185,70 @@ const Projects = () => {
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      {/* ------------------- FIXED MOBILE MODAL -------------------------- */}
+      {/* ------------------- HOLOGRAPHIC MODAL -------------------------- */}
       {/* ------------------------------------------------------------------ */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex sm:items-center justify-center">
+        <div className="fixed inset-0 z-[100] flex sm:items-center justify-center p-0 sm:p-4">
           
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-bg-main/80 backdrop-blur-sm transition-opacity"
             onClick={() => setSelectedProject(null)}
           ></div>
           
           {/* Modal Container */}
-          {/* FIX: Mobile = fixed inset-0 (full screen) | Desktop = relative with max height */}
-          <div className="fixed inset-0 sm:relative bg-white w-full h-full sm:h-[85vh] sm:max-w-5xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row animate-fade-in-up">
+          <div className="fixed inset-0 sm:relative bg-bg-main w-full h-full sm:h-auto sm:max-h-[85vh] sm:max-w-5xl sm:rounded-2xl border border-text-muted/10 shadow-2xl shadow-accent/10 overflow-hidden flex flex-col lg:flex-row animate-fade-in-up">
             
             {/* --- MOBILE STICKY HEADER --- */}
-            <div className="flex sm:hidden items-center justify-between p-4 border-b border-slate-100 bg-white shrink-0 z-20">
+            <div className="flex sm:hidden items-center justify-between p-4 border-b border-text-muted/10 bg-bg-main shrink-0 z-20">
                <button 
                  onClick={() => setSelectedProject(null)}
-                 className="flex items-center gap-1 text-slate-600 font-bold text-sm active:text-indigo-600 transition-colors"
+                 className="flex items-center gap-1 text-text-muted font-bold text-sm active:text-accent transition-colors"
                >
                  <ChevronLeft size={22} /> Back
                </button>
-               <span className="font-bold text-slate-900 truncate max-w-[200px]">
+               <span className="font-bold text-text-main truncate max-w-[200px]">
                  {selectedProject.title}
                </span>
-               <div className="w-6"></div> {/* Spacer for alignment */}
+               <div className="w-6"></div> 
             </div>
 
-            {/* 1. Modal Image (Hidden on Mobile) */}
-            <div className="hidden sm:block w-full lg:w-[45%] bg-slate-100 relative h-48 lg:h-auto shrink-0">
+            {/* 1. Modal Image (Desktop Side) */}
+            <div className="hidden sm:block w-full lg:w-[45%] bg-black relative h-64 lg:h-auto shrink-0 overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
               <img 
                 src={selectedProject.modalImage || selectedProject.image} 
                 alt={selectedProject.title} 
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
               />
             </div>
 
             {/* 2. Content Side */}
-            <div className="w-full lg:w-[55%] flex flex-col h-full bg-white relative">
+            <div className="w-full lg:w-[55%] flex flex-col h-full bg-bg-main relative">
               
               {/* Desktop Header */}
-              <div className="hidden sm:flex p-6 lg:p-8 border-b border-slate-100 shrink-0 justify-between items-start bg-white">
+              <div className="hidden sm:flex p-6 lg:p-8 border-b border-text-muted/10 shrink-0 justify-between items-start bg-bg-main/50 backdrop-blur-xl">
                  <div>
-                    <span className="text-indigo-600 font-bold tracking-wider uppercase text-[10px] mb-1 block">
+                    <span className="text-accent font-bold tracking-wider uppercase text-[10px] mb-1 block">
                       {selectedProject.category}
                     </span>
-                    <h3 className="text-3xl font-black text-slate-900 leading-tight">
+                    <h3 className="text-3xl font-black text-text-main leading-tight">
                       {selectedProject.title}
                     </h3>
                  </div>
                  <button 
                    onClick={() => setSelectedProject(null)}
-                   className="text-slate-400 hover:text-slate-900 bg-slate-50 p-2 rounded-full transition-colors hover:bg-slate-100"
+                   className="text-text-muted hover:text-text-main bg-bg-card/50 hover:bg-bg-card p-2 rounded-full transition-colors border border-transparent hover:border-text-muted/20"
                  >
                    <X size={20} />
                  </button>
               </div>
 
               {/* Scrollable Body */}
-              <div className="p-5 sm:p-6 lg:p-8 overflow-y-auto flex-1 bg-white overscroll-contain">
+              <div className="p-5 sm:p-6 lg:p-8 overflow-y-auto flex-1 bg-bg-main overscroll-contain custom-scrollbar">
                  
                  {/* Mobile Image */}
-                 <div className="sm:hidden mb-6 rounded-xl overflow-hidden shadow-sm border border-slate-100 relative group">
+                 <div className="sm:hidden mb-6 rounded-xl overflow-hidden border border-text-muted/10 relative shadow-lg">
                     <img 
                       src={selectedProject.image} 
                       alt={selectedProject.title} 
@@ -255,19 +256,21 @@ const Projects = () => {
                     />
                  </div>
 
-                 <div className="prose prose-sm prose-slate text-slate-600 leading-relaxed whitespace-pre-line mb-8">
-                    {selectedProject.fullDescription}
+                 <div className="prose prose-sm prose-invert text-text-muted leading-relaxed whitespace-pre-line mb-8">
+                    {/* Note: 'prose-invert' is for dark mode Tailwind, but we might need custom handling for light mode text color if using @tailwindcss/typography. 
+                        Since we are using standard text classes, this should be fine. */}
+                    <p className="text-text-muted">{selectedProject.fullDescription}</p>
                  </div>
 
                  {/* Key Features */}
-                 <div className="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                    <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wide flex items-center gap-2 mb-4">
-                       <CheckCircle2 size={16} className="text-indigo-500"/> Key Features
+                 <div className="bg-bg-card/40 p-5 rounded-xl border border-text-muted/10">
+                    <h4 className="font-bold text-text-main text-xs uppercase tracking-wide flex items-center gap-2 mb-4">
+                       <CheckCircle2 size={16} className="text-accent"/> Key Features
                     </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                        {selectedProject.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-slate-600 text-sm">
-                             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0"></div>
+                          <li key={i} className="flex items-start gap-3 text-text-muted text-sm">
+                             <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0 shadow-[0_0_5px_var(--accent-glow)]"></div>
                              {feature}
                           </li>
                        ))}
@@ -276,14 +279,13 @@ const Projects = () => {
               </div>
 
               {/* Footer Buttons */}
-              {/* FIX: Increased padding (pb-12) to clear mobile home bars */}
-              <div className="p-5 sm:p-6 lg:p-8 border-t border-slate-100 shrink-0 bg-white z-20 pb-12 sm:pb-6 lg:pb-8 shadow-[0_-10px_30px_rgba(0,0,0,0.03)]">
+              <div className="p-5 sm:p-6 lg:p-8 border-t border-text-muted/10 shrink-0 bg-bg-main z-20 pb-safe sm:pb-6 lg:pb-8">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a 
                     href={selectedProject.githubLink} 
                     target="_blank" 
                     rel="noreferrer"
-                    className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-slate-900 text-white rounded-xl font-bold hover:bg-black transition-all text-sm shadow-lg active:scale-95"
+                    className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-text-main text-bg-main rounded-xl font-bold hover:opacity-90 transition-all text-sm shadow-lg active:scale-95"
                   >
                     <Github size={18} /> View Code
                   </a>
@@ -292,7 +294,7 @@ const Projects = () => {
                       href={selectedProject.liveLink} 
                       target="_blank" 
                       rel="noreferrer"
-                      className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 border border-indigo-200 transition-all text-sm active:scale-95"
+                      className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-accent/10 text-accent rounded-xl font-bold hover:bg-accent/20 border border-accent/20 transition-all text-sm active:scale-95"
                     >
                       <ExternalLink size={18} /> Live Demo
                     </a>

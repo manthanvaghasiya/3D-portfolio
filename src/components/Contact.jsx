@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { Mail, MapPin, Send, Loader2, ArrowRight, Github, Linkedin, Instagram } from "lucide-react";
+import { Mail, MapPin, Send, Loader2, ArrowRight, Github, Linkedin, Instagram, Terminal } from "lucide-react";
 
 const Contact = () => {
   const form = useRef();
@@ -12,120 +12,133 @@ const Contact = () => {
     setIsSubmitting(true);
     setStatus(null);
 
-    // Kept your existing EmailJS credentials exactly as they were
+    // Kept your existing EmailJS credentials
     emailjs.sendForm('service_tqyl1bs', 'template_gji86k6', form.current, 'LejwDMsuSfiQAbUBX')
       .then(() => {
-        setStatus({ type: 'success', message: "Message sent successfully!" });
+        setStatus({ type: 'success', message: "Transmission Successful. Data received." });
         e.target.reset();
       })
       .catch(() => {
-        setStatus({ type: 'error', message: "Something went wrong. Please try again." });
+        setStatus({ type: 'error', message: "Transmission Failed. Signal lost." });
       })
       .finally(() => setIsSubmitting(false));
   };
 
   return (
-    <section id="contact" className="relative bg-[#0F172A] pt-24 pb-12 overflow-hidden text-white">
+    <section id="contact" className="relative pt-24 pb-12 overflow-hidden z-20">
       
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* CHANGED: 'gap-16' -> 'gap-12 lg:gap-24'. 
-            This brings the text and form closer on tablets so they relate better visually. */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 mb-20 md:mb-24">
           
-          {/* --- LEFT: Call to Action --- */}
+          {/* --- LEFT: STATUS TERMINAL --- */}
           <div data-aos="fade-right">
-            {/* CHANGED: 'md:text-6xl' -> 'md:text-5xl lg:text-6xl'. 
-                Fixes the headline being too massive on tablets. */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6">
-              Let’s build something <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
-                great together.
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-card/50 border border-text-muted/20 text-accent text-[11px] font-bold uppercase tracking-widest mb-6 shadow-sm backdrop-blur-sm">
+               <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+               </span>
+               Signal Active
+            </div>
+
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-text-main mb-6">
+              Initialize <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-glow">
+                Collaboration.
               </span>
             </h2>
             
-            <p className="text-slate-400 text-lg md:text-xl mb-8 leading-relaxed max-w-lg">
-              I'm currently available for <b>Full-Time Positions And Freelance Work</b>. 
-              If you have a project that needs a skilled MERN stack developer, let's talk.
+            <p className="text-text-muted text-lg md:text-xl mb-8 leading-relaxed max-w-lg">
+              Open for <b>Full-Time Positions</b> and high-impact freelance missions. 
+              If you have a project that requires advanced engineering, initiate the uplink below.
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-blue-400 shrink-0">
+              <div className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-full bg-bg-card/50 border border-text-muted/20 flex items-center justify-center text-accent shrink-0 group-hover:border-accent/50 group-hover:shadow-[0_0_15px_var(--accent-glow)] transition-all">
                   <Mail size={24} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 font-medium">Email Me</p>
-                  <a href="mailto:manthanvaghasiya60@gmail.com" className="text-lg hover:text-blue-400 transition-colors break-all md:break-normal">
+                  <p className="text-sm text-text-muted font-medium uppercase tracking-wider">Direct Comms</p>
+                  <a href="mailto:manthanvaghasiya60@gmail.com" className="text-lg text-text-main hover:text-accent transition-colors break-all md:break-normal">
                     manthanvaghasiya60@gmail.com
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-full bg-bg-card/50 border border-text-muted/20 flex items-center justify-center text-accent shrink-0 group-hover:border-accent/50 group-hover:shadow-[0_0_15px_var(--accent-glow)] transition-all">
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 font-medium">Location</p>
-                  <p className="text-lg ">Surat, Gujarat, India</p>
+                  <p className="text-sm text-text-muted font-medium uppercase tracking-wider">Base of Operations</p>
+                  <p className="text-lg text-text-main">Surat, Gujarat, India</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* --- RIGHT: Modern Form --- */}
-          {/* CHANGED: 'p-8' -> 'p-6 md:p-8'. Gives inputs more room on smaller screens. */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-3xl" data-aos="fade-left">
-            <form ref={form} onSubmit={sendEmail} className="space-y-6">
+          {/* --- RIGHT: HOLOGRAPHIC FORM --- */}
+          <div className="bg-bg-card/30 backdrop-blur-xl border border-text-muted/10 p-6 md:p-8 rounded-3xl shadow-2xl relative overflow-hidden" data-aos="fade-left">
+            {/* Corner Accents */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-accent/10 blur-2xl -z-10 rounded-full"></div>
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-accent/10 blur-2xl -z-10 rounded-full"></div>
+
+            <form ref={form} onSubmit={sendEmail} className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-400">Name</label>
+                  <label className="text-xs font-bold text-text-muted uppercase tracking-wider ml-1">Identity</label>
                   <input 
                     type="text" 
                     name="user_name" 
                     required 
                     placeholder="John Doe"
-                    // CHANGED: Added 'text-base' to prevent iOS zoom on focus
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-600"
+                    className="w-full bg-bg-main/50 border border-text-muted/20 rounded-xl px-4 py-3 text-text-main focus:outline-none focus:border-accent focus:shadow-[0_0_15px_var(--accent-glow)] transition-all placeholder:text-text-muted/50"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-400">Email</label>
+                  <label className="text-xs font-bold text-text-muted uppercase tracking-wider ml-1">Frequency</label>
                   <input 
                     type="email" 
                     name="user_email" 
                     required 
                     placeholder="john@example.com"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-600"
+                    className="w-full bg-bg-main/50 border border-text-muted/20 rounded-xl px-4 py-3 text-text-main focus:outline-none focus:border-accent focus:shadow-[0_0_15px_var(--accent-glow)] transition-all placeholder:text-text-muted/50"
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-400">Message</label>
+                <label className="text-xs font-bold text-text-muted uppercase tracking-wider ml-1">Data Packet</label>
                 <textarea 
                   name="message" 
                   rows="4" 
                   required 
-                  placeholder="Tell me about your project..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none placeholder:text-slate-600"
+                  placeholder="Describe your mission parameters..."
+                  className="w-full bg-bg-main/50 border border-text-muted/20 rounded-xl px-4 py-3 text-text-main focus:outline-none focus:border-accent focus:shadow-[0_0_15px_var(--accent-glow)] transition-all resize-none placeholder:text-text-muted/50"
                 ></textarea>
               </div>
 
               <button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 shadow-lg shadow-blue-600/20"
+                className="w-full bg-accent hover:bg-accent-glow text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 shadow-lg shadow-accent/20 group"
               >
-                {isSubmitting ? <Loader2 className="animate-spin" /> : <>Send Message <ArrowRight size={20} /></>}
+                {isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <>
+                    <Terminal size={18} /> Send Transmission <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </button>
 
               {status && (
-                <div className={`p-4 rounded-xl text-center text-sm font-medium ${status.type === 'success' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+                <div className={`p-4 rounded-xl text-center text-sm font-bold border backdrop-blur-sm animate-fade-in-up ${
+                  status.type === 'success' 
+                    ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' 
+                    : 'bg-red-500/10 text-red-500 border-red-500/20'
+                }`}>
                   {status.message}
                 </div>
               )}
@@ -134,9 +147,9 @@ const Contact = () => {
         </div>
 
         {/* --- FOOTER --- */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-slate-500 text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Manthan Vaghasiya. Built with React & Tailwind.
+        <div className="pt-8 border-t border-text-muted/10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-text-muted text-sm text-center md:text-left">
+            © {new Date().getFullYear()} Manthan Vaghasiya. Engineered with React & WebGL.
           </p>
          <div className="flex items-center gap-4">
              {[
@@ -149,7 +162,7 @@ const Contact = () => {
                  href={social.link}
                  target="_blank"
                  rel="noreferrer"
-                 className="p-3 rounded-full bg-white/5 text-slate-400 border border-white/5 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/20"
+                 className="p-3 rounded-full bg-bg-card/50 text-text-muted border border-text-muted/10 hover:bg-accent hover:text-white hover:border-accent hover:shadow-[0_0_15px_var(--accent-glow)] transition-all duration-300 hover:-translate-y-1"
                >
                  <social.icon size={20} />
                </a>

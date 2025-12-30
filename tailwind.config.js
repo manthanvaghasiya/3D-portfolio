@@ -4,39 +4,39 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // <--- CRITICAL: Enables manual toggle
   theme: {
     extend: {
       colors: {
-        primary: '#0F172A', // Dark Slate (Text/Background)
-        accent: '#2563EB',  // Electric Blue (Buttons/Links)2563EB
-        light: '#F8FAFC',   // Off-white background
-        dark: '#1E293B',    // Darker background for cards
+        // We will define these CSS variables in index.css in the next steps,
+        // but we register them here so Tailwind knows about them.
+        bg: {
+          main: 'var(--bg-main)',       // Dynamic Background
+          card: 'var(--bg-card)',       // Dynamic Card Surface
+        },
+        text: {
+          main: 'var(--text-main)',     // Dynamic Text Color
+          muted: 'var(--text-muted)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent-main)',
+          glow: 'var(--accent-glow)',
+        }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-      }
-    },
-  },
-  plugins: [],
-
-  extend: {
-    backgroundSize: {
-      'size-200': '200% 200%',
-    },
-    animation: {
-      'gradient-x': 'gradient-x 3s ease infinite',
-    },
-    keyframes: {
-      'gradient-x': {
-        '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-        },
-        '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-        },
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
     },
   },
+  plugins: [],
 }

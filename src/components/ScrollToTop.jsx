@@ -7,7 +7,6 @@ const ScrollToTop = () => {
   // Toggle visibility based on scroll position
   useEffect(() => {
     const toggleVisibility = () => {
-      // Show button if scrolled more than 300px
       if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
@@ -19,7 +18,6 @@ const ScrollToTop = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  // Smooth scroll to top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -28,17 +26,15 @@ const ScrollToTop = () => {
   };
 
   return (
-    <>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          className="fixed bottom-8 right-6 md:bottom-10 md:right-10 z-40 p-3 rounded-full bg-accent text-white shadow-lg shadow-blue-500/40 hover:bg-blue-600 hover:-translate-y-1 transition-all duration-300 animate-fade-in-up"
-        >
-          <ArrowUp size={24} />
-        </button>
-      )}
-    </>
+    <button
+      onClick={scrollToTop}
+      className={`fixed bottom-8 right-8 z-50 p-4 rounded-full bg-accent text-white shadow-lg hover:shadow-[0_0_20px_var(--accent-glow)] hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm border border-white/20 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+      }`}
+      aria-label="Scroll to top"
+    >
+      <ArrowUp size={24} />
+    </button>
   );
 };
 

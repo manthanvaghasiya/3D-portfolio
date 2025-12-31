@@ -17,6 +17,21 @@ export default {
       '3xl': '1920px', // 4K Screens
     },
     extend: {
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'text-shimmer': 'shimmer 2.5s linear infinite', // <--- NEW: The magic shimmer
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' }, // Standardized to -20px for better visibility
+        },
+        shimmer: { // <--- NEW: Keyframes for the gradient text flow
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
+        }
+      },
       colors: {
         bg: {
           main: 'var(--bg-main)',
@@ -30,6 +45,7 @@ export default {
           DEFAULT: 'var(--accent-main)',
           glow: 'var(--accent-glow)',
         }
+        
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

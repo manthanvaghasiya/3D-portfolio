@@ -33,7 +33,7 @@ const HeroTypography = () => {
           I turn ideas into
         </span>
         <span className="block text-4xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 animate-text-shimmer bg-[length:200%_auto]">
-          Digital Reality
+          sclable Digital product
         </span>
       </motion.h1>
 

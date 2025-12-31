@@ -15,24 +15,36 @@ const Navbar = () => {
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      const sections = ['home', 'skills', 'experience', 'projects', 'about', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+    let ticking = false;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-            setActiveSection(section);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 1. Navbar Appearance Logic
+          setScrolled(window.scrollY > 50);
+
+          // 2. Active Section Logic (Throttled)
+          const sections = ['home', 'skills', 'experience', 'projects', 'about', 'contact'];
+          // Adding a small offset for better UX when clicking links
+          const scrollPosition = window.scrollY + 100;
+
+          for (const section of sections) {
+            const element = document.getElementById(section);
+            if (element) {
+              const offsetTop = element.offsetTop;
+              const height = element.offsetHeight;
+              if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
+                setActiveSection(section);
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true }); // 'passive: true' improves scroll performance
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -46,16 +58,20 @@ const Navbar = () => {
 
   return (
     <nav
+      // ACCESSIBILITY: Proper semantic role
+      role="navigation"
+      aria-label="Main Navigation"
       className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
         scrolled
-          ? "bg-bg-main/80 backdrop-blur-md border-text-muted/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+          // DESIGN: Added backdrop-saturate for "premium glass" feel
+          ? "bg-bg-main/80 backdrop-blur-md backdrop-saturate-150 border-text-muted/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
           : "bg-transparent border-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         
         {/* LOGO */}
-        <a href="#home" className="group flex items-center gap-2 relative z-50">
+        <a href="#home" aria-label="Home" className="group flex items-center gap-2 relative z-50">
           <div className="relative flex items-center justify-center w-10 h-10 bg-accent/10 rounded-xl border border-accent/20 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
             <Hexagon size={24} className="text-accent group-hover:text-white transition-colors rotate-90" />
             <span className="absolute text-[10px] font-bold text-accent group-hover:text-white">MV</span>
@@ -71,6 +87,8 @@ const Navbar = () => {
             <a
               key={link.name}
               href={link.href}
+              // ACCESSIBILITY: Indicate current page
+              aria-current={activeSection === link.href.substring(1) ? "page" : undefined}
               className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                 activeSection === link.href.substring(1)
                   ? "text-accent bg-accent/10 shadow-[0_0_10px_var(--accent-glow)]"
@@ -88,6 +106,8 @@ const Navbar = () => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
+            // ACCESSIBILITY: Label for screen readers
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             className="p-2.5 rounded-full bg-bg-card/50 border border-text-muted/10 text-text-muted hover:text-accent hover:border-accent/50 hover:shadow-[0_0_15px_var(--accent-glow)] transition-all active:scale-95 backdrop-blur-sm"
           >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
@@ -103,10 +123,13 @@ const Navbar = () => {
             <Sparkles size={16} /> Let's Talk
           </a>
 
-          {/* Mobile Menu Button */}
+         {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-text-main z-50"
+            className="md:hidden p-2 text-text-main z-50 focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
+            // ACCESSIBILITY: Menu state
+            aria-expanded={isOpen}
+            aria-label="Toggle navigation menu"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

@@ -13,6 +13,7 @@
   --text-muted: #64748B;
   --accent-main: #2563EB;   /* Electric Blue */
   --accent-glow: #3B82F6;
+  --border-dim: rgba(255, 255, 255, 0.1);
 }
 
 /* DARK MODE OVERRIDES ("The Midnight Void") */
@@ -25,6 +26,13 @@
   --accent-glow: #8B5CF6;   /* Violet Glow */
 }
 
+html {
+    /* PERFORMANCE: Better font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* LAYOUT: Prevents layout shift when scrollbar appears */
+    scrollbar-gutter: stable;
+  }
 /* --- GLOBAL RESETS --- */
 html, body {
   height: 100%;
@@ -33,7 +41,29 @@ html, body {
   scroll-behavior: smooth;
   background-color: var(--bg-main); /* Smoothly transitions via CSS transition */
   color: var(--text-main);
-  transition: background-color 0.5s ease, color 0.5s ease; /* The Smooth Dimension Shift */
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* BRANDING: Selection color */
+  ::selection {
+    background-color: var(--accent-main);
+    color: #ffffff;
+  }
+
+
+/* PERFORMANCE: Hint for 3D Canvas container */
+.canvas-container {
+  contain: layout paint;
+  will-change: transform;
 }
 
 /* Custom Scrollbar to match theme */

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Sun, Moon, Sparkles, Hexagon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import { useScrollSpy } from "../hooks/useScrollSpy"; // IMPORT NEW HOOK
+import MobileMenu from "./Navbar/MobileMenu"; // IMPORT NEW COMPONENT
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -14,40 +16,7 @@ const Navbar = () => {
   const whatsappMessage = "Hello Manthan, I discovered your portfolio and would like to discuss a project.";
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          // 1. Navbar Appearance Logic
-          setScrolled(window.scrollY > 50);
-
-          // 2. Active Section Logic (Throttled)
-          const sections = ['home', 'skills', 'experience', 'projects', 'about', 'contact'];
-          // Adding a small offset for better UX when clicking links
-          const scrollPosition = window.scrollY + 100;
-
-          for (const section of sections) {
-            const element = document.getElementById(section);
-            if (element) {
-              const offsetTop = element.offsetTop;
-              const height = element.offsetHeight;
-              if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-                setActiveSection(section);
-              }
-            }
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true }); // 'passive: true' improves scroll performance
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  
   const navLinks = [
     { name: "Home", href: "#home", id: "home" },
     { name: "About", href: "#about", id: "about" },
@@ -57,18 +26,16 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      // ACCESSIBILITY: Proper semantic role
+   <nav
       role="navigation"
-      aria-label="Main Navigation"
       className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
         scrolled
-          // DESIGN: Added backdrop-saturate for "premium glass" feel
-          ? "bg-bg-main/80 backdrop-blur-md backdrop-saturate-150 border-text-muted/10 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+          ? "bg-bg-main/80 backdrop-blur-md backdrop-saturate-150 border-text-muted/10 py-3 shadow-lg"
           : "bg-transparent border-transparent py-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+     <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        
         
         {/* LOGO */}
         <a href="#home" aria-label="Home" className="group flex items-center gap-2 relative z-50">
@@ -87,8 +54,6 @@ const Navbar = () => {
             <a
               key={link.name}
               href={link.href}
-              // ACCESSIBILITY: Indicate current page
-              aria-current={activeSection === link.href.substring(1) ? "page" : undefined}
               className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                 activeSection === link.href.substring(1)
                   ? "text-accent bg-accent/10 shadow-[0_0_10px_var(--accent-glow)]"

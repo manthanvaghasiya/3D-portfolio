@@ -4,9 +4,6 @@ import 'aos/dist/aos.css';
 import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 
-// Only this one background component is needed now
-import HologramCanvas from './components/HologramCanvas'; 
-
 import Hero from './components/Hero';
 import Experience from './components/Experience';
 import Stats from './components/Stats'; 
@@ -38,9 +35,6 @@ function App() {
 
       {!isLoading && (
         <>
-          {/* The Single Source of Truth for Background */}
-          <HologramCanvas />
-
           <Navbar />
           
           <Layout>

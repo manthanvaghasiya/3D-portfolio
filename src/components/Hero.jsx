@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Github, Linkedin, Instagram, Download } from "lucide-react";
-import { useTheme } from "../context/ThemeContext"; // Import Theme Context
+import { useTheme } from "../context/ThemeContext";
+import HologramCanvas from "./HologramCanvas"; // <--- Import the 3D Canvas
 
 const Hero = () => {
-  const { theme } = useTheme(); // Get current theme
+  const { theme } = useTheme();
   const line1 = "I turn ideas into";
   const line2 = "Scalable digital products";
 
@@ -14,7 +15,6 @@ const Hero = () => {
   const interval2Ref = useRef(null);
   const mountedRef = useRef(true);
 
-  // Respect reduced motion
   const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
     : false;
@@ -72,7 +72,7 @@ const Hero = () => {
     return (
       <>
         {before}
-        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text bg-[length:200%_auto]">
+        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text bg-[length:200%_auto]">
           {typedIdeas}
         </span>
         {after}
@@ -86,7 +86,7 @@ const Hero = () => {
     const idx = text2.indexOf(word);
     if (idx === -1) {
       return (
-        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text bg-[length:200%_auto]">
+        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text bg-[length:200%_auto]">
           {text2}
         </span>
       );
@@ -97,10 +97,9 @@ const Hero = () => {
 
     return (
       <>
-        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text bg-[length:200%_auto]">
+        <span className="text-transparent animate-text-shimmer bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text bg-[length:200%_auto]">
           {before}
         </span>{" "}
-        {/* Use Theme Color for text */}
         <span className="text-text-main">{typedProducts}</span>
       </>
     );
@@ -111,13 +110,11 @@ const Hero = () => {
       id="home"
       className="relative flex items-center justify-center min-h-[100dvh] pt-20 overflow-hidden"
     >
-      {/* REMOVED: The <div className="absolute inset-0 -z-20 ..."> with blobs.
-         This allows the HologramCanvas behind it to actually be seen.
-      */}
+      {/* --- THE BLUE DIMENSION BACKGROUND --- */}
+      {/* This ensures the Hologram is ONLY here and sits behind the content */}
+      <HologramCanvas />
 
-      {/* Profile Glow Effect (Optional - kept but made theme aware) */}
-      <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[-40px] lg:left-[-140px] lg:translate-x-0 lg:bottom-[-120px] h-[300px] w-[300px] md:h-[450px] md:w-[450px] lg:h-[560px] lg:w-[560px] rounded-full bg-gradient-to-tr from-accent/20 to-purple-500/20 -z-10 opacity-60 lg:opacity-100 blur-3xl" />
-
+      {/* --- CONTENT LAYER --- */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col lg:flex-row items-center gap-10 lg:gap-14 px-6">
         
         {/* IMAGE SECTION */}
@@ -139,10 +136,10 @@ const Hero = () => {
         <div className="w-full lg:w-[55%] text-center lg:text-left space-y-5 md:space-y-7 lg:space-y-6 order-2">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 md:px-5 md:py-2.5 lg:px-4 lg:py-2 text-[10px] md:text-xs lg:text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-500 shadow-sm backdrop-blur" data-aos="fade-up" data-aos-delay="0">
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 md:px-5 md:py-2.5 lg:px-4 lg:py-2 text-[10px] md:text-xs lg:text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.4)] backdrop-blur-md" data-aos="fade-up" data-aos-delay="0">
             <span className="relative flex h-2 w-2 md:h-2.5 md:w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 md:h-2.5 md:w-2.5 rounded-full bg-emerald-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 md:h-2.5 md:w-2.5 rounded-full bg-cyan-500" />
             </span>
             Available for Work
           </div>
@@ -176,7 +173,7 @@ const Hero = () => {
             </a>
 
             {/* Resume Button */}
-            <a href="/resume.pdf" download="Manthan_Vaghasiya_Resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 md:gap-3 rounded-full border border-text-muted/20 bg-transparent px-6 py-3 md:px-10 md:py-4 lg:px-8 lg:py-3.5 text-sm md:text-lg lg:text-base font-semibold text-text-main shadow-sm transition hover:border-accent hover:text-accent active:scale-95">
+            <a href="/resume.pdf" download="Manthan_Vaghasiya_Resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 md:gap-3 rounded-full border border-text-muted/20 bg-transparent px-6 py-3 md:px-10 md:py-4 lg:px-8 lg:py-3.5 text-sm md:text-lg lg:text-base font-semibold text-text-main shadow-sm transition hover:border-accent hover:text-accent active:scale-95 backdrop-blur-sm">
               Download CV <Download size={18} className="md:w-5 md:h-5 lg:w-[18px] lg:h-[18px]" />
             </a>
           </div>

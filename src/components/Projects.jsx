@@ -185,127 +185,14 @@ const Projects = () => {
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      {/* ------------------- HOLOGRAPHIC MODAL -------------------------- */}
+      {/* ------------------- 3D HOLOGRAPHIC MODAL ----------------------- */}
       {/* ------------------------------------------------------------------ */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex sm:items-center justify-center p-0 sm:p-4">
-          
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-bg-main/80 backdrop-blur-sm transition-opacity"
-            onClick={() => setSelectedProject(null)}
-          ></div>
-          
-          {/* Modal Container */}
-          <div className="fixed inset-0 sm:relative bg-bg-main w-full h-full sm:h-auto sm:max-h-[85vh] sm:max-w-5xl sm:rounded-2xl border border-text-muted/10 shadow-2xl shadow-accent/10 overflow-hidden flex flex-col lg:flex-row animate-fade-in-up">
-            
-            {/* --- MOBILE STICKY HEADER --- */}
-            <div className="flex sm:hidden items-center justify-between p-4 border-b border-text-muted/10 bg-bg-main shrink-0 z-20">
-               <button 
-                 onClick={() => setSelectedProject(null)}
-                 className="flex items-center gap-1 text-text-muted font-bold text-sm active:text-accent transition-colors"
-               >
-                 <ChevronLeft size={22} /> Back
-               </button>
-               <span className="font-bold text-text-main truncate max-w-[200px]">
-                 {selectedProject.title}
-               </span>
-               <div className="w-6"></div> 
-            </div>
 
-            {/* 1. Modal Image (Desktop Side) */}
-            <div className="hidden sm:block w-full lg:w-[45%] bg-black relative h-64 lg:h-auto shrink-0 overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
-              <img 
-                src={selectedProject.modalImage || selectedProject.image} 
-                alt={selectedProject.title} 
-                className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-              />
-            </div>
 
-            {/* 2. Content Side */}
-            <div className="w-full lg:w-[55%] flex flex-col h-full bg-bg-main relative">
-              
-              {/* Desktop Header */}
-              <div className="hidden sm:flex p-6 lg:p-8 border-b border-text-muted/10 shrink-0 justify-between items-start bg-bg-main/50 backdrop-blur-xl">
-                 <div>
-                    <span className="text-accent font-bold tracking-wider uppercase text-[10px] mb-1 block">
-                      {selectedProject.category}
-                    </span>
-                    <h3 className="text-3xl font-black text-text-main leading-tight">
-                      {selectedProject.title}
-                    </h3>
-                 </div>
-                 <button 
-                   onClick={() => setSelectedProject(null)}
-                   className="text-text-muted hover:text-text-main bg-bg-card/50 hover:bg-bg-card p-2 rounded-full transition-colors border border-transparent hover:border-text-muted/20"
-                 >
-                   <X size={20} />
-                 </button>
-              </div>
+      ..........
 
-              {/* Scrollable Body */}
-              <div className="p-5 sm:p-6 lg:p-8 overflow-y-auto flex-1 bg-bg-main overscroll-contain custom-scrollbar">
-                 
-                 {/* Mobile Image */}
-                 <div className="sm:hidden mb-6 rounded-xl overflow-hidden border border-text-muted/10 relative shadow-lg">
-                    <img 
-                      src={selectedProject.image} 
-                      alt={selectedProject.title} 
-                      className="w-full h-48 object-cover"
-                    />
-                 </div>
 
-                 <div className="prose prose-sm prose-invert text-text-muted leading-relaxed whitespace-pre-line mb-8">
-                    {/* Note: 'prose-invert' is for dark mode Tailwind, but we might need custom handling for light mode text color if using @tailwindcss/typography. 
-                        Since we are using standard text classes, this should be fine. */}
-                    <p className="text-text-muted">{selectedProject.fullDescription}</p>
-                 </div>
-
-                 {/* Key Features */}
-                 <div className="bg-bg-card/40 p-5 rounded-xl border border-text-muted/10">
-                    <h4 className="font-bold text-text-main text-xs uppercase tracking-wide flex items-center gap-2 mb-4">
-                       <CheckCircle2 size={16} className="text-accent"/> Key Features
-                    </h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                       {selectedProject.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3 text-text-muted text-sm">
-                             <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0 shadow-[0_0_5px_var(--accent-glow)]"></div>
-                             {feature}
-                          </li>
-                       ))}
-                    </ul>
-                 </div>
-              </div>
-
-              {/* Footer Buttons */}
-              <div className="p-5 sm:p-6 lg:p-8 border-t border-text-muted/10 shrink-0 bg-bg-main z-20 pb-safe sm:pb-6 lg:pb-8">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a 
-                    href={selectedProject.githubLink} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-text-main text-bg-main rounded-xl font-bold hover:opacity-90 transition-all text-sm shadow-lg active:scale-95"
-                  >
-                    <Github size={18} /> View Code
-                  </a>
-                  {selectedProject.liveLink !== "#" && (
-                    <a 
-                      href={selectedProject.liveLink} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="flex-1 py-3.5 flex items-center justify-center gap-2 bg-accent/10 text-accent rounded-xl font-bold hover:bg-accent/20 border border-accent/20 transition-all text-sm active:scale-95"
-                    >
-                      <ExternalLink size={18} /> Live Demo
-                    </a>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      )}
+      
     </section>
   );
 };

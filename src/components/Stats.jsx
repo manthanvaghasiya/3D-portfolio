@@ -1,35 +1,35 @@
 import React from "react";
-import { Code2, Coffee, FolderGit2, Users } from "lucide-react";
+import { Code2, FolderGit2, Fingerprint, BrainCircuit } from "lucide-react";
 
 const Stats = () => {
   const stats = [
     {
       id: 1,
-      label: "Years Experience",
-      value: "1+",
+      value: "3+",
       icon: <Code2 size={24} />,
-      desc: "Full Stack Dev"
+      label: "Production Projects",
+      desc: "Live & Deployed"
     },
     {
       id: 2,
-      label: "Projects Completed",
-      value: "12+",
+      value: "MERN",
       icon: <FolderGit2 size={24} />,
-      desc: "Production Ready"
+      label: "Primary Tech Stack",
+      desc: "Mongo, Express, React, Node"
     },
     {
       id: 3,
-      label: "Cups of Coffee",
-      value: "500+",
-      icon: <Coffee size={24} />,
-      desc: "Fuel Consumed"
+      value: "100%",
+      icon: <Fingerprint size={24} />,
+      label: "Ownership & Reliability",
+      desc: "Committed to Excellence"
     },
     {
       id: 4,
-      label: "Happy Clients",
-      value: "5+",
-      icon: <Users size={24} />,
-      desc: "Global Connections"
+      value: "Daily",
+      icon: <BrainCircuit size={24} />,
+      label: "Learning & Improvement",
+      desc: "Continuous Growth"
     }
   ];
 
@@ -43,7 +43,7 @@ const Stats = () => {
           data-aos="fade-up"
         >
           {/* Ambient Background Glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl pointer-events-none"></div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 relative z-10">
             {stats.map((stat, index) => (
@@ -63,12 +63,12 @@ const Stats = () => {
                   {stat.value}
                 </h3>
 
-                {/* Label */}
+                {/* Label & Desc */}
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-text-main uppercase tracking-wider">
                     {stat.label}
                   </span>
-                  <span className="text-xs text-text-muted font-medium">
+                  <span className="text-[10px] md:text-xs text-text-muted font-medium mt-1">
                     {stat.desc}
                   </span>
                 </div>

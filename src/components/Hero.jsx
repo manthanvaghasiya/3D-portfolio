@@ -8,13 +8,13 @@ const Hero = () => {
       id="home"
       className="relative flex items-center justify-center min-h-[100dvh] pt-20 overflow-hidden"
     >
-      {/* 1. THE 3D LAYER (Background) */}
+      {/* 1. THE 3D WORLD (Background) */}
       <HologramCanvas />
 
-      {/* 2. THE UI LAYER (Foreground) */}
+      {/* 2. THE CONTENT (Foreground) */}
       <HeroContent />
       
-      {/* <style> TAG REMOVED - Logic moved to Tailwind Config */ }
+      {/* "Scroll to Explore" removed to prevent overlapping with Social Icons */}
     </section>
   );
 };

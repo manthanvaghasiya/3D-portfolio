@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Preload } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useTheme } from "../context/ThemeContext";
 
-// Import the new modules - ENSURE THESE ARE ONLY LISTED ONCE
 import TechCore from "./canvas/TechCore";
 import CyberEnvironment from "./canvas/CyberEnvironment";
 import FloatingSkills from "./canvas/FloatingSkills";
@@ -12,6 +11,15 @@ import HolographicProjector from "./canvas/HolographicProjector";
 
 const HologramCanvas = () => {
   const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile screens (less than 768px)
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div 
@@ -20,28 +28,41 @@ const HologramCanvas = () => {
     >
       <Canvas
         camera={{ position: [0, 0, 15], fov: 50 }}
-        dpr={[1, 2]}
-        // Performance Optimization: Disable default AA when using PostProcessing
+        // Performance: Lower pixel ratio on mobile to save battery/GPU
+        dpr={isMobile ? [1, 1.5] : [1, 2]} 
         gl={{ antialias: false, powerPreference: "high-performance" }}
       >
+        <Suspense fallback={null}>
+          <CyberEnvironment theme={theme} />
+          
+          {/* Pass isMobile to TechCore to reduce polygon count if needed */}
+          <TechCore theme={theme} isMobile={isMobile} />
+          
+          <FloatingSkills theme={theme} />
+          <HolographicProjector />
 
-        
-            <CyberEnvironment theme={theme} />
-            <TechCore theme={theme} />
-            <FloatingSkills theme={theme} />
-            <HolographicProjector />
+          <Preload all />
+        </Suspense>
 
-        {/* CINEMATIC POLISH: The Bloom Effect */}
-        <EffectComposer disableNormalPass>
-          <Bloom 
-            luminanceThreshold={0.2} // Triggers on brighter elements
-            mipmapBlur 
-            intensity={0.5} 
-            radius={0.5}
-          />
-        </EffectComposer>
+        {/* CINEMATIC BLOOM: Only on Desktop */}
+        {!isMobile && (
+          <EffectComposer disableNormalPass>
+            <Bloom 
+              luminanceThreshold={0.2} 
+              mipmapBlur 
+              intensity={0.5} 
+              radius={0.5}
+            />
+          </EffectComposer>
+        )}
 
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} enableDamping={true} />
+        <OrbitControls 
+          enableZoom={false} 
+          enablePan={false}
+          autoRotate 
+          autoRotateSpeed={0.5} 
+          enableDamping={true} 
+        />
       </Canvas>
     </div>
   );

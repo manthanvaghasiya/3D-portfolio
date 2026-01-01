@@ -40,11 +40,11 @@ function App() {
 
           <Layout>
             <Hero />
+            <About />
             <Skills />
             <Experience />
             <Stats />
             <Projects />
-            <About />
             <Contact />
           </Layout>
           

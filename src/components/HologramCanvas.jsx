@@ -7,6 +7,8 @@ import { useTheme } from "../context/ThemeContext";
 // Import the new modules - ENSURE THESE ARE ONLY LISTED ONCE
 import TechCore from "./canvas/TechCore";
 import CyberEnvironment from "./canvas/CyberEnvironment";
+import FloatingSkills from "./canvas/FloatingSkills";
+import HolographicProjector from "./canvas/HolographicProjector";
 
 const HologramCanvas = () => {
   const { theme } = useTheme();
@@ -22,9 +24,12 @@ const HologramCanvas = () => {
         // Performance Optimization: Disable default AA when using PostProcessing
         gl={{ antialias: false, powerPreference: "high-performance" }}
       >
-        <CyberEnvironment theme={theme} />
+
         
-        <TechCore theme={theme} />
+            <CyberEnvironment theme={theme} />
+            <TechCore theme={theme} />
+            <FloatingSkills theme={theme} />
+            <HolographicProjector />
 
         {/* CINEMATIC POLISH: The Bloom Effect */}
         <EffectComposer disableNormalPass>

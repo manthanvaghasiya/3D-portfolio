@@ -1,95 +1,127 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Text, Torus, Icosahedron } from "@react-three/drei";
+import { Text, Icosahedron, Torus, Sparkles, MeshDistortMaterial, Float } from "@react-three/drei";
+import * as THREE from "three";
+import { easing } from "maath";
 
 const TechCore = ({ theme }) => {
-  const coreRef = useRef();
-  const netRef = useRef();
-  const ringRef = useRef();
-
-  // 1. CYBER COLOR PALETTE (High Contrast Glow)
-  const primaryColor = theme === 'dark' ? "#00f7ff" : "#0066ff"; // Electric Cyan / Deep Blue
-  const secondaryColor = theme === 'dark' ? "#bd00ff" : "#6200ff"; // Neon Purple / Indigo
+  const groupRef = useRef();
+  const outerRingRef = useRef();
+  const midRingRef = useRef();
+  const innerRingRef = useRef();
+  
+  // CYBER COLOR PALETTE
+  // Using more neon/emissive values for the "Hologram" feel
+  const primaryColor = theme === 'dark' ? "#00f7ff" : "#2563eb"; 
+  const secondaryColor = theme === 'dark' ? "#bd00ff" : "#7c3aed";
+  const glowIntensity = theme === 'dark' ? 2 : 1.5;
 
   useFrame((state, delta) => {
-    // 1. Text floats gently
-    if (coreRef.current) {
-      coreRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
+    // 1. MOUSE PARALLAX (The "Watcher" Effect)
+    // We gently lerp the entire group's rotation to face the mouse pointer
+    if (groupRef.current) {
+      easing.dampE(
+        groupRef.current.rotation,
+        [state.pointer.y * 0.2, state.pointer.x * 0.2, 0],
+        0.25,
+        delta
+      );
     }
-    // 2. The main network sphere rotates slowly
-    if (netRef.current) {
-      netRef.current.rotation.y += delta * 0.08;
-      netRef.current.rotation.z += delta * 0.02;
+
+    // 2. PROCEDURAL ANIMATIONS (Constant motion)
+    // Rotate rings at different speeds and axes to create mechanical complexity
+    if (outerRingRef.current) {
+      outerRingRef.current.rotation.x += delta * 0.2;
+      outerRingRef.current.rotation.y += delta * 0.05;
     }
-    // 3. The scanner ring rotates fast on a different axis
-    if (ringRef.current) {
-      ringRef.current.rotation.x += delta * 0.5;
-      ringRef.current.rotation.y += delta * 0.2;
+    if (midRingRef.current) {
+      midRingRef.current.rotation.x -= delta * 0.1;
+      midRingRef.current.rotation.z += delta * 0.2;
+    }
+    if (innerRingRef.current) {
+      innerRingRef.current.rotation.x += delta * 0.4;
     }
   });
 
   return (
     <group position={[0, 0, 0]}>
-      {/* --- A. THE CORE TEXT --- */}
-      <Text
-        ref={coreRef}
-        fontSize={1.3}
-        letterSpacing={0.05}
-        // FIXED: Reverted to the only URL we know works in your environment
-        font="https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxM.woff"
-        anchorX="center"
-        anchorY="middle"
-      >
-        WEB
-        {/* Super bright glow effect */}
-        <meshStandardMaterial 
-          color={primaryColor}
-          emissive={primaryColor}
-          emissiveIntensity={4}
-          toneMapped={false}
-        />
-      </Text>
+      {/* FLOAT: Adds a gentle bobbing motion to everything (Idle animation) */}
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+        
+        {/* === THE CONTAINER FOR MOUSE INTERACTION === */}
+        <group ref={groupRef}>
+          
+          {/* --- A. THE TEXT --- */}
+          {/* Placed slightly forward to float "above" the hologram */}
+          <Text
+            position={[0, 0, 2.8]}
+            fontSize={1.2}
+            font="https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxM.woff"
+            anchorX="center"
+            anchorY="middle"
+            letterSpacing={0.1}
+          >
+            Web
+            <meshStandardMaterial
+              color={primaryColor}
+              emissive={primaryColor}
+              emissiveIntensity={glowIntensity * 1.5}
+              toneMapped={false}
+            />
+          </Text>
 
-      {/* --- B. THE INNER "DATA PLANET" SPHERE --- */}
-      {/* A translucent solid sphere to give the core body */}
-      <mesh>
-        <sphereGeometry args={[1.6, 32, 32]} />
-        <meshStandardMaterial 
-          color={secondaryColor}
-          emissive={secondaryColor}
-          emissiveIntensity={0.5}
-          transparent
-          opacity={0.2}
-          wireframe={false}
-        />
-      </mesh>
+          {/* --- B. THE ENERGY NUCLEUS (Inner Sphere) --- */}
+          {/* MeshDistortMaterial makes it look like unstable liquid energy */}
+          <mesh scale={1.8}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <MeshDistortMaterial
+              color={secondaryColor}
+              speed={2} // Fast distortion
+              distort={0.4} // High distortion amount
+              radius={1}
+              transparent
+              opacity={0.3}
+            />
+          </mesh>
 
-      {/* --- C. THE MAIN "WEB" NETWORK MESH --- */}
-      {/* Icosahedron with Detail=3 creates a dense triangular grid representing connections */}
-      <Icosahedron args={[2, 3]} ref={netRef}>
-        <meshStandardMaterial 
-          color={primaryColor} 
-          emissive={primaryColor}
-          emissiveIntensity={1.5} // Glowing lines
-          wireframe={true} // Crucial: Shows the lines, not the faces
-          transparent 
-          opacity={0.6} 
-          roughness={0}
-          metalness={1}
-        />
-      </Icosahedron>
+          {/* --- C. THE DATA SHIELD (Wireframe Cage) --- */}
+          <mesh scale={2.2}>
+            <icosahedronGeometry args={[1, 2]} />
+            <meshStandardMaterial
+              color={primaryColor}
+              emissive={primaryColor}
+              emissiveIntensity={0.5}
+              wireframe
+              transparent
+              opacity={0.3}
+            />
+          </mesh>
 
-      {/* --- D. THE CYBERSECURITY SCANNER RINGS --- */}
-      <group ref={ringRef} rotation={[Math.PI / 3, 0, 0]}>
-        {/* Inner thick ring */}
-        <Torus args={[2.3, 0.05, 16, 100]}>
-          <meshStandardMaterial color={secondaryColor} emissive={secondaryColor} emissiveIntensity={2} />
-        </Torus>
-        {/* Outer thin wireframe ring */}
-        <Torus args={[2.5, 0.02, 16, 64]}>
-           <meshStandardMaterial color={primaryColor} emissive={primaryColor} wireframe />
-        </Torus>
-      </group>
+          {/* --- D. THE SCANNER RINGS --- */}
+          <group scale={0.8}>
+            {/* Outer Heavy Ring */}
+            
+
+            {/* Mid Angled Ring */}
+            <group ref={midRingRef} rotation={[Math.PI / 4, 0, 0]}>
+              <Torus args={[3.2, 0.02, 16, 100]}>
+                <meshStandardMaterial 
+                  color={secondaryColor} 
+                  emissive={secondaryColor} 
+                  emissiveIntensity={glowIntensity} 
+                />
+              </Torus>
+            </group>
+
+             
+          </group>
+
+          {/* --- E. PARTICLES --- */}
+          {/* Floating bits of code/data around the core */}
+          
+        
+        </group>
+      </Float>
     </group>
   );
 };

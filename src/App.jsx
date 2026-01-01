@@ -14,6 +14,7 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import About from "./components/About";
 import Contact from './components/Contact';
+import HologramCanvas from './components/HologramCanvas';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +36,8 @@ function App() {
 
       {!isLoading && (
         <>
+        <HologramCanvas />
+
           <Layout>
             <Hero />
             <Skills />

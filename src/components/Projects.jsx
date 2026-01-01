@@ -3,10 +3,11 @@ import { Github, ArrowUpRight, FolderGit2 } from "lucide-react";
 import { PROJECTS_DATA } from "../data";
 import ProjectCard from "./Projects/ProjectCard";
 import ProjectModal from "./Projects/ProjectModal"; // <--- IMPORT THIS
+import { useHoloStore } from "../hooks/useHoloStore";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
-
+  const { setHoveredProject } = useHoloStore();
   // Lock body scroll logic
   useEffect(() => {
     if (selectedProject) document.body.style.overflow = "hidden";
@@ -46,12 +47,18 @@ const Projects = () => {
         {/* --- PROJECT GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {PROJECTS_DATA.map((project, index) => (
-            <ProjectCard 
-              key={index} 
-              project={project} 
-              index={index} 
-              onClick={() => setSelectedProject(project)} 
-            />
+            <div 
+              key={index}
+              // 3. WRAP CARD IN DIV TO CAPTURE HOVER
+              onMouseEnter={() => setHoveredProject(project)}
+              onMouseLeave={() => setHoveredProject(null)}
+            >
+              <ProjectCard 
+                project={project} 
+                index={index} 
+                onClick={() => setSelectedProject(project)} 
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -66,4 +73,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Projects;  

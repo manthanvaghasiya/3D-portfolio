@@ -36,7 +36,7 @@ const Skills = () => {
       </div>
 
       {/* The Infinite Marquee */}
-      <div data-aos="fade-up" data-aos-delay="200">
+      <div className="lg:hidden" data-aos="fade-up" data-aos-delay="200">
         <TechMarquee lanes={SKILL_LANES} />
       </div>
 
